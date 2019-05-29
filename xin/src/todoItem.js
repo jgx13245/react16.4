@@ -8,12 +8,16 @@ class TodoItem extends Component {
   }
 
   render() {
+    // es6解构出来
+    const { content } = this.props
     return (
-      <div onClick={this.handleDeleteItem}>{this.props.content}</div>
+      <div onClick={this.handleDeleteItem}>{content}</div>
     )
   }
   handleDeleteItem() {
-    this.props.deleteItem(this.props.index)
+    // es6解构出来
+    const { deleteItem,index } = this.props 
+    deleteItem(index)
   }
 }
 
