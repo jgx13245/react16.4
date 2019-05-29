@@ -10,3 +10,5 @@ create-react-app 文件名
 3. 新搭建的项目是没有webpack的配置项的，需要npm install eject 弹射出才能找到配置项
 
 4. all in js css文件可以像js一样import引入
+
+5. 大写的标签就是jsx语法的组件，小写的就是普通的标签组件
