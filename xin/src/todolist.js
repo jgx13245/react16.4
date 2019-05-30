@@ -1,5 +1,7 @@
 import React, { Component,Fragment } from 'react'
 import TodoItem from './todoItem'
+import PropTypes from 'prop-types'
+
 
 class TodoList extends Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class TodoList extends Component {
               return (
                 <div  key={index}>
                   <TodoItem content={item} index={index} deleteItem={this.handleDelete.bind(this)}/>
+                  {test}-{item}
                 </div>
               )
             })
@@ -50,4 +53,16 @@ class TodoList extends Component {
     })
   }
 }
+// 对传给子组件的数据进行强校验。要不然报错
+TodoItem.propTypes = {
+  test:PropTypes.string.isRequired,
+  content:PropTypes.string,
+  deleteItem:PropTypes.func,
+  index:PropTypes.number
+}
+// 上面的test 父组件没有传值给子组件，但是isRequired要求必须传，这个时候defaultTypes就是默认给它一个值
+TodoItem.defaultTypes = {
+  test:'hello world'
+}
+
 export default TodoList

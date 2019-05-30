@@ -1,9 +1,20 @@
-# react衍生的小思考
+# propsTypes和defaultProps 应用
 
-1.不是命令式。是声明式的开发
+1.有时候父组件传值给子组件的时候，有函数，变量，等等。子组件接受的类型不能乱传。是固定的，需要检验一下
 
-2.单项数据流，子组件可以使用传过来的值，但是不能修改。我可以给你单向的传递，但是你不能反过来给我修改
+```
+// 写在父组件的地方
 
-3.react只是一个视图层的框架。还需要数据管理类的框架，用来处理数据
+// 对传给子组件的数据进行强校验。要不然报错
+TodoItem.propTypes = {
+  test:PropTypes.string.isRequired,
+  content:PropTypes.string,
+  deleteItem:PropTypes.func,
+  index:PropTypes.number
+}
+// 上面的test 父组件没有传值给子组件，但是isRequired要求必须传，这个时候defaultTypes就是默认给它一个值
+TodoItem.defaultTypes = {
+  test:'hello world'
+}
 
-4.react就是函数式编程
+```
