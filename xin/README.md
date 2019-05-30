@@ -1,20 +1,39 @@
-# propsTypes和defaultProps 应用
+# react的虚拟dom
 
-1.有时候父组件传值给子组件的时候，有函数，变量，等等。子组件接受的类型不能乱传。是固定的，需要检验一下
+### react的渲染步骤
+1.获取state的数据
 
-```
-// 写在父组件的地方
+2.获取 jsx 模板
 
-// 对传给子组件的数据进行强校验。要不然报错
-TodoItem.propTypes = {
-  test:PropTypes.string.isRequired,
-  content:PropTypes.string,
-  deleteItem:PropTypes.func,
-  index:PropTypes.number
-}
-// 上面的test 父组件没有传值给子组件，但是isRequired要求必须传，这个时候defaultTypes就是默认给它一个值
-TodoItem.defaultTypes = {
-  test:'hello world'
-}
+3.生成一个虚拟的dom(虚拟的dom就是一个js的对像，用来描述真实的dom)
 
-```
+4.用虚拟的dom的结构生成真实的DOM挂载到页面上
+
+5.state发生改变
+
+6.数据+模板生成新的虚拟dom，(极大地提升了性能)
+
+7.比较新老虚拟dom的区别（极大地提升了性能）
+
+8.直接操作odom，进行相应的替换
+
+**渲染的机制是：jsx语法 -> createElement -> 虚拟的dom（js对象）-> 真实的dom**
+
+- vue的虚拟dom机制跟这个是一样的
+
+优点:
+1、性能大幅度的提升
+2.得益于虚拟dom的存在，可以使react跨端展示。rn。因为原生之类的应用不能识别dom,,但是能识别js对象啊
+
+### 虚拟dom的diff算法
+
+1. diff就是diffrence的比对，其实就是渲染原理的第七步。比较的时候的算法
+
+2. setState的时候改变数据，才比对。seetState是异步的，因为如果你连续改了三次数据，setState异步把三次并未一次统一改变，
+   提升性能
+
+3. diff是同层比对，如果第一层就不一样，下面就不比了，这样算法比较快
+
+4. 之所以要加key值，是因为生成虚拟dom比对的时候，容易找到且比对
+
+5. 不要用index作key值的原因就是，如果你使用index做key,一旦吧前面的某个元素删除掉，重新渲染时候，key值就会改变，比对就会出问题
