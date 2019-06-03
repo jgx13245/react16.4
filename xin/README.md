@@ -1,37 +1,31 @@
-# react中生命周期函数的介绍
+# redux的入门
 
-### 某一时刻，会被自动执行的函数
+##### 1.react只是一个轻量的视图层框架
 
+##### 2.入如果组件通信很复杂，组件很多，我们现在需要配套一个数据层的框架。
 
-##### mounting部分（只在挂载的时候会被执行）
+##### 3.有一个公共的数据。store。其他组件数据都从这个里面获取。。store一旦改变，其他组件也自动重新改变
 
-1.componentWillMount  组件页面渲染之前执行
-
-2.componentDidMount  页面dom渲染完之后执行
-
-##### updating部分
-
-1. shouldComponentUpdate   数据更新之前执行，需要返回一个布尔值
-
-2. componentWillUpdate 组件被更新之前会被执行，但是会在shouldComponentUpdate之后执行
-
-3. componentDidUpdate   组件被更新之后会被执行，
-  
-4. componentWillReceiveProps  1.接受父组件传值过来的参数 2.组件第一次存在父组件中，不会被执行 3.第二次以后就会执行
-
-##### unmoute
-
-componentWillUnmount 将要删除dom之前的时候执行
-
-
-##### 提升性能
+##### 4.大概的图谱
 ```
-// 有时是子组件不一定要一直跟着父组件改变而重新渲染，所以用这个生命周期函数来判断传值是否改变老更改。避免子组件做无用的重新渲染
-  shouldComponentUpdate(nextProps,nextState) {
-    if(nextProps.content !== this.props.content) {
-      return true
-    }else{
-      return false
-    }
-  } 
+// 比喻成图书馆借书的人。
+（1）component 就是借书的人
+（2）ActionCreate就是你说借书的那句话，通过dispatch派发你的请求
+（3）Store就是图书馆管理员，负责数据的核心
+（4）Reducer就是一个小本，管理员不能把所有的记录都记住，所以从这里查找
+
+
+
+             dispatch（action）        (previoustate,action)
+ActionCreate ----------------> Store  ---------------------->  Reducer
+     |                                 <---------------------
+     |                           |       (newState)
+     |                  (state)  |
+     |                           |
+     |                           v
+      -----------------------Component
 ```
+
+##### 5.store的创建
+
+1.npm install redux --save
