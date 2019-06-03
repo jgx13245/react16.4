@@ -25,7 +25,6 @@ class TodoList extends Component {
               return (
                 <div  key={index}>
                   <TodoItem content={item} index={index} deleteItem={this.handleDelete.bind(this)}/>
-                  {test}-{item}
                 </div>
               )
             })
@@ -33,6 +32,27 @@ class TodoList extends Component {
         </ul>
       </Fragment>
     )
+  }
+  // 页面挂载之前执行
+  componentWillMount() {
+    console.log('componentWillMount')
+  }
+  // 页面挂载之后执行
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+  // 组件被更新之前会被执行
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return true
+  }
+  // 组件被更新之前会被执行，但是会在shouldComponentUpdate之后执行
+  componentWillUpdate() {
+    console.log('componentWillUpdate')
+  }
+  // 组件被更新之后会被执行，
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
   }
   handleInputValue(e){
     this.setState({
@@ -55,14 +75,14 @@ class TodoList extends Component {
 }
 // 对传给子组件的数据进行强校验。要不然报错
 TodoItem.propTypes = {
-  test:PropTypes.string.isRequired,
+  // test:PropTypes.string.isRequired,
   content:PropTypes.string,
   deleteItem:PropTypes.func,
   index:PropTypes.number
 }
-// 上面的test 父组件没有传值给子组件，但是isRequired要求必须传，这个时候defaultTypes就是默认给它一个值
-TodoItem.defaultTypes = {
-  test:'hello world'
-}
+// // 上面的test 父组件没有传值给子组件，但是isRequired要求必须传，这个时候defaultTypes就是默认给它一个值
+// TodoItem.defaultTypes = {
+//   test:'hello world'
+// }
 
 export default TodoList
