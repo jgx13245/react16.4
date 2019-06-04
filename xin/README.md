@@ -1,12 +1,12 @@
 # redux的入门
 
-##### 1.react只是一个轻量的视图层框架
+### 1.react只是一个轻量的视图层框架
 
-##### 2.入如果组件通信很复杂，组件很多，我们现在需要配套一个数据层的框架。
+### 2.入如果组件通信很复杂，组件很多，我们现在需要配套一个数据层的框架。
 
-##### 3.有一个公共的数据。store。其他组件数据都从这个里面获取。。store一旦改变，其他组件也自动重新改变
+### 3.有一个公共的数据。store。其他组件数据都从这个里面获取。。store一旦改变，其他组件也自动重新改变
 
-##### 4.大概的图谱
+### 4.大概的图谱
 ```
 // 比喻成图书馆借书的人。
 （1）component 就是借书的人
@@ -26,7 +26,7 @@ ActionCreate ----------------> Store  ---------------------->  Reducer
       -----------------------Component
 ```
 
-##### 5.store的创建
+### 5.store的创建
 
 1.npm install redux --save
 
@@ -57,7 +57,7 @@ export default (state = defaultState,action) => {
 ```
 在组件里面的调用数据， store.getState()  打印就能获取到数据
 
-##### 组件修改store的值，让input的值时刻跟store的值一样，调用dispatch
+### 组件修改store的值，让input的值时刻跟store的值一样，调用dispatch
 
 ```
 // 组件里  让input的值改变时，store的值跟着变
@@ -101,7 +101,7 @@ handleChangeInput() {
     this.setState(store.getState())
   }
 ```
-##### 点击button按钮 数据添加到list里面
+### 点击button按钮 数据添加到list里面
 
 ```
 // 组件里
@@ -137,7 +137,7 @@ export default (state = defaultState,action) => {
 
 ```
 
-##### 点击单项，删除每一项
+### 点击单项，删除每一项
 
 ```
 //组件里
@@ -176,12 +176,12 @@ export default (state = defaultState,action) => {
 }
 ```
 
-##### 拆分actionTypes
+### 拆分actionTypes
 
 1.其实就是把action派发的type从字符串换成常量。，原因是，一旦你type的字符串写错了，很难找到原因，
 常量写错了，直接告诉你定义错误，可以很快的定义出错误的位置
 
-##### 提炼actionCreate
+### 提炼actionCreate
 
 新建立一个actionCreate.js的文件
 
