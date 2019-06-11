@@ -1,7 +1,8 @@
 import {
   CHANGE_INPUT_VALUE,
   ADD_ITEM_VALUE,
-  DELETE_ITEM
+  DELETE_ITEM,
+  LIST_ITEM
 } from './actionTypes'
 
 const defaultState = {
@@ -25,6 +26,12 @@ export default (state = defaultState,action) => {
   if(action.type === DELETE_ITEM) {
     const newState = JSON.parse(JSON.stringify(state))
     newState.inputList.splice(action.index,1)
+    return newState
+  }
+  // 获取列表数据
+  if(action.type === LIST_ITEM){
+    const newState = JSON.parse(JSON.stringify(state))
+    newState.inputList = action.data
     return newState
   }
   return state

@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import TodoListUi from './TodoListUi';
 import 'antd/dist/antd.css';
-import { Button,Input,List } from 'antd';
-import store from './store'
-import {handleChangeInputValueAction,handleSubmitAction,handleDeleteAction} from './store/actionCreate'
+import store from './store';
+import axios from 'axios'
+import { sagaGetList,handleChangeInputValueAction,handleSubmitAction,handleDeleteAction,listItem} from './store/actionCreate';
+
 
 class TodoList extends Component {
   constructor(props){
@@ -10,29 +12,35 @@ class TodoList extends Component {
     this.state = store.getState()
     this.handleChangeInputValue = this.handleChangeInputValue.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    store.subscribe(this.handleChangeInput.bind(this))
+    this.handleDelete = this.handleDelete.bind(this)
+    this.handleChangeInput = this.handleChangeInput.bind(this)
+    store.subscribe(this.handleChangeInput)
   }
   render() {
     return (
       <div>
-        <div>
-          <Input 
-            placeholder="输入信息" 
-            style={{width:'300px',marginRight:'10px'}} 
-            value = {this.state.inputValue}
-            onChange={this.handleChangeInputValue}
-            />
-          <Button type="primary" onClick={this.handleSubmit}>Primary</Button>
-        </div>
-        <List
-          style={{width:'400px',marginTop:'20px'}}
-          bordered
-          size="small"
-          dataSource={this.state.inputList}
-          renderItem={(item,index) => (<List.Item onClick={this.handleDelete.bind(this,index)}>{item}</List.Item>)}
-        />
-      </div>      
+         <TodoListUi 
+        inputValue={this.state.inputValue}
+        handleChangeInputValue = {this.handleChangeInputValue}
+        handleSubmit = {this.handleSubmit}
+        inputList = {this.state.inputList}
+        handleDelete = {this.handleDelete}
+      />
+      </div>
     )
+  }
+  componentDidMount() {
+    const action = sagaGetList()
+    store.dispatch(action)
+    // axios.get('https://www.easy-mock.com/mock/5bf4d27d58cc81351fa1f082/example/payIntervalCake').then(res => {
+    //   const arrData = res.data.data
+    //   const newData = []
+    //   arrData.map((item,index) => {
+    //     newData.push(item.item)
+    //   })  
+    //   const action = listItem(newData)
+    //   store.dispatch(action)
+    // })
   }
   handleChangeInputValue(e) {
     const action = handleChangeInputValueAction(e.target.value)
