@@ -26,7 +26,7 @@ ActionCreate ----------------> Store  ---------------------->  Reducer
       -----------------------Component
 ```
 
-###拆分UI组件和容器组件
+### 拆分UI组件和容器组件
 
 新建立一个文件夹就是单纯的写ui。
 
@@ -198,7 +198,10 @@ function* mySaga() {
 export default mySaga;
 ```
 
+
 容器组件派发的action，rduecer可以接受，saga也可以接受，接受完以后，执行异步方法，获取数据
+
 获取数据以后，使用put的方法，把数据给reducer。在给store
 
 相当于saga吧应该给reducer的action给截取了。在自己的里面方法里面请求个异步数据，然后通过put吧action给reducer
+
