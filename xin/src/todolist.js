@@ -13,9 +13,7 @@ const Todolist = (props) => {
       <ul>
         {
           inputList.map((item,index) => {
-            return <li key={index} onClick={(index) => {handleDelete(index)}}>
-             <span>{index}</span>
-            {item}</li>
+            return <li key={index} onClick={() => {handleDelete(index)}}>{item}</li>
           })
         }
       </ul>
@@ -46,8 +44,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action)
     },
     handleDelete(index) {
-      console.log(index)
-      console.log('------------------')
       const action = {
         type:'delete_item',
         value:index
