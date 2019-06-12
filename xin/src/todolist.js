@@ -1,62 +1,61 @@
-import React, { Component } from 'react';
-import TodoListUi from './TodoListUi';
-import 'antd/dist/antd.css';
-import store from './store';
-import axios from 'axios'
-import { sagaGetList,handleChangeInputValueAction,handleSubmitAction,handleDeleteAction,listItem} from './store/actionCreate';
+import React from 'react';
+import { connect } from 'react-redux'
+import './style.css'
 
-
-class TodoList extends Component {
-  constructor(props){
-    super(props)
-    this.state = store.getState()
-    this.handleChangeInputValue = this.handleChangeInputValue.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleChangeInput = this.handleChangeInput.bind(this)
-    store.subscribe(this.handleChangeInput)
-  }
-  render() {
-    return (
+const Todolist = (props) => {
+  const { inputList,inputValue, handleChangeInput, handelAddItem, handleDelete} = props
+  return(
+    <div>
       <div>
-         <TodoListUi 
-        inputValue={this.state.inputValue}
-        handleChangeInputValue = {this.handleChangeInputValue}
-        handleSubmit = {this.handleSubmit}
-        inputList = {this.state.inputList}
-        handleDelete = {this.handleDelete}
-      />
+        <input type="text" value={inputValue} onChange={handleChangeInput}/>
+        <button onClick={handelAddItem}>提交</button>
       </div>
-    )
-  }
-  componentDidMount() {
-    const action = sagaGetList()
-    store.dispatch(action)
-    // axios.get('https://www.easy-mock.com/mock/5bf4d27d58cc81351fa1f082/example/payIntervalCake').then(res => {
-    //   const arrData = res.data.data
-    //   const newData = []
-    //   arrData.map((item,index) => {
-    //     newData.push(item.item)
-    //   })  
-    //   const action = listItem(newData)
-    //   store.dispatch(action)
-    // })
-  }
-  handleChangeInputValue(e) {
-    const action = handleChangeInputValueAction(e.target.value)
-    store.dispatch(action)
-  }
-  handleChangeInput() {
-    this.setState(store.getState())
-  }
-  handleSubmit() {
-    const action = handleSubmitAction()
-    store.dispatch(action)
-  }
-  handleDelete(index) {
-    const action = handleDeleteAction(index)
-    store.dispatch(action)
+      <ul>
+        {
+          inputList.map((item,index) => {
+            return <li key={index} onClick={(index) => {handleDelete(index)}}>
+             <span>{index}</span>
+            {item}</li>
+          })
+        }
+      </ul>
+    </div>
+  )
+}
+
+const mapStateToProps = (state) => {
+  return {
+   inputValue:state.inputValue,
+   inputList:state.inputList
   }
 }
 
-export default TodoList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleChangeInput(e) {
+      const action = {
+        type:'change_input_value',
+        value:e.target.value
+      }
+      dispatch(action)
+    },
+    handelAddItem() {
+      const action = {
+        type:'add_item',
+      }
+      dispatch(action)
+    },
+    handleDelete(index) {
+      console.log(index)
+      console.log('------------------')
+      const action = {
+        type:'delete_item',
+        value:index
+      }
+      dispatch(action)
+    }
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Todolist)

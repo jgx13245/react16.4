@@ -1,14 +1,6 @@
-import { createStore,applyMiddleware,compose } from 'redux';
-import createSagaMiddleware from 'redux-saga'
-// 应该获取reducer的数据了
-import reducer from './reducer'
-import todoSage from './sagas'
+import { createStore } from 'redux'
+import reducer from './reducer.js'
 
-const sagaMiddleware = createSagaMiddleware()
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+const store = new createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
-
-const store = createStore(reducer, enhancer);
-sagaMiddleware.run(todoSage)
-export default store;
+export default store
